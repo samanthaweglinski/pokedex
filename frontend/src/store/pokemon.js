@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import CreatePokemonForm from "../components/CreatePokemonForm";
-import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM } from "./items";
+import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM, UPDATE_ITEM } from "./items";
 
 const LOAD = "pokemon/LOAD";
 const LOAD_TYPES = "pokemon/LOAD_TYPES";
 const ADD_ONE = "pokemon/ADD_ONE";
-const CREATE = "pokemon/CREATE";
+// const CREATE = "pokemon/CREATE";
+// const UPDATE = "pokemon/UPDATE";
 
 const load = (list) => ({
   type: LOAD,
@@ -22,10 +23,17 @@ const addOnePokemon = (pokemon) => ({
   pokemon,
 });
 
-const createPokemon = (pokemon) => ({
-  type: CREATE,
-  pokemon,
-});
+// const createPokemon = (pokemon) => ({
+//   type: CREATE,
+//   pokemon,
+// });
+
+// const updatePokemon = (pokemon) => {
+//   return {
+//     type: UPDATE,
+//     pokemon
+//   }
+// };
 
 export const fetchOnePokemon = (id) => async (dispatch) => {
   const response = await fetch(`/api/pokemon/${id}`);
@@ -65,10 +73,26 @@ export const createPokemonThunk = (pokemon) => async (dispatch) => {
 
   if (response.ok) {
     const pokemon = await response.json();
-    dispatch(createPokemon(pokemon));
+    dispatch(addOnePokemon(pokemon));
     return pokemon;
   }
 };
+
+export const updatePokemonThunk = (pokemon) => async (dispatch) => {
+  const response = await fetch(`/api/pokemon/${pokemon.id}`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(pokemon)
+  });
+
+  if (response.ok) {
+    const pokemon = await response.json();
+    dispatch(addOnePokemon(pokemon));
+    return pokemon;
+  }
+}
 
 const initialState = {
   list: [],
