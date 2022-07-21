@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../store/items";
+import { deleteItemThunk } from "../store/items";
 
 const PokemonItems = ({ pokemon, setEditItemId }) => {
   useEffect(() => {
@@ -17,6 +18,9 @@ const PokemonItems = ({ pokemon, setEditItemId }) => {
     return null;
   }
 
+  // const deleteHandler = () => {
+  //   dispatch(deleteItemThunk(pokemon.id, item.id));
+  // };
 
   return items.map((item) => (
     <tr key={item.id}>
@@ -37,7 +41,14 @@ const PokemonItems = ({ pokemon, setEditItemId }) => {
       )}
       {pokemon.captured && (
         <td className="centered">
-          <button>Delete</button>
+          <button
+            value={item}
+            onClick={() => {
+              dispatch(deleteItemThunk(pokemon.id, item.id));
+            }}
+          >
+            Delete
+          </button>
         </td>
       )}
     </tr>

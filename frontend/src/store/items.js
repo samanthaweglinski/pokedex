@@ -49,6 +49,18 @@ export const updateItemThunk = (item) => async (dispatch) => {
   }
 }
 
+export const deleteItemThunk = (pokemonId, itemId) => async (dispatch) => {
+  const response = await fetch(`/api/items/${itemId}`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    const item = await response.json()
+    dispatch(remove(itemId, pokemonId))
+    return item
+  }
+}
+
 const initialState = {};
 
 const itemsReducer = (state = initialState, action) => {
