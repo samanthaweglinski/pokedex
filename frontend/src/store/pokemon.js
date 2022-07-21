@@ -1,5 +1,3 @@
-import { useDispatch } from "react-redux";
-import CreatePokemonForm from "../components/CreatePokemonForm";
 import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM, UPDATE_ITEM } from "./items";
 
 const LOAD = "pokemon/LOAD";
